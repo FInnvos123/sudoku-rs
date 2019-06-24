@@ -5,3 +5,4 @@ authors = ["Finn Vos <finnvos34@protonmail.ch>"]
 edition = "2018"
 
 [dependencies]
+piston_window = "0.99.0"
