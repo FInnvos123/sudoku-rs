@@ -26,7 +26,8 @@ fn main() {
     let grid_file = find_folder::Search::ParentsThenKids(3, 3)
         .for_folder("sudokus").unwrap().join("1");
     let grid = Grid::from_file(&grid_file).unwrap_or_else(|err| {
-        panic!("{}", err);
+        println!("{}", err);
+        std::process::exit(1);
     });
 
     // load font
