@@ -1,10 +1,11 @@
 [package]
 name = "sudoku-rs"
 version = "0.1.0"
-authors = ["Finn Vos <finnvos34@protonmail.ch>"]
+authors = ["Finn Vos"]
 edition = "2018"
 
 [dependencies]
 solver = { path = "../solver" }
 piston_window = "0.99.0"
 find_folder = "0.3.0"
+structopt = "0.2.18"
