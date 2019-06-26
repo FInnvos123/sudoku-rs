@@ -7,6 +7,7 @@ extern crate find_folder;
 extern crate solver;
 
 use piston_window::*;
+use solver::Grid;
 pub use crate::grid_view::*;
 
 mod grid_view;
@@ -17,15 +18,24 @@ fn main() {
             .exit_on_esc(true)
             .build().unwrap();
 
+    // initialize grid view
     let grid_view_settings = GridViewSettings::new();
     let grid_view = GridView::new(grid_view_settings);
-    let grid = solver::get_grid();
 
+    // load sudoku grid
+    let grid_file = find_folder::Search::ParentsThenKids(3, 3)
+        .for_folder("sudokus").unwrap().join("1");
+    let grid = Grid::from_file(&grid_file).unwrap_or_else(|err| {
+        panic!("{}", err);
+    });
+
+    // load font
     let assets = find_folder::Search::ParentsThenKids(3, 3)
         .for_folder("assets").unwrap();
     let mut glyphs = window.load_font(assets.join("FiraSans-Regular.ttf"))
         .unwrap();
 
+    // render loop
     while let Some(e) = window.next() {
         window.draw_2d(&e, |c, g, d| {
             clear([0.0, 0.0, 0.0, 1.0], g);
