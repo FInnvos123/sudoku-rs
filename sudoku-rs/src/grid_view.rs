@@ -1,5 +1,5 @@
-use piston_window::*;
 use piston_window::types::Color;
+use piston_window::*;
 use solver::*;
 
 /// Settings for grid view
@@ -49,10 +49,7 @@ impl GridView {
     }
 
     /// Draw the grid
-    pub fn draw(&self, grid: &Grid,
-                glyphs: &mut Glyphs,
-                c: &Context, g: &mut G2d) {
-
+    pub fn draw(&self, grid: &Grid, glyphs: &mut Glyphs, c: &Context, g: &mut G2d) {
         let ref settings = self.settings;
 
         // board background
@@ -61,7 +58,9 @@ impl GridView {
 
         // cell borders
         for i in 0..9 {
-            if (i % 3) == 0 {continue;}
+            if (i % 3) == 0 {
+                continue;
+            }
 
             let x = i as f64 / 9.0 * settings.size;
             let y = i as f64 / 9.0 * settings.size;
@@ -69,20 +68,24 @@ impl GridView {
             let y2 = settings.size;
 
             // vertical line
-            line_from_to(settings.border_color,
-                         settings.cell_border_radius,
-                         [x, 0.0],
-                         [x, y2],
-                         c.transform,
-                         g);
+            line_from_to(
+                settings.border_color,
+                settings.cell_border_radius,
+                [x, 0.0],
+                [x, y2],
+                c.transform,
+                g,
+            );
 
             // horizontal line
-            line_from_to(settings.border_color,
-                         settings.cell_border_radius,
-                         [0.0, y],
-                         [x2, y],
-                         c.transform,
-                         g);
+            line_from_to(
+                settings.border_color,
+                settings.cell_border_radius,
+                [0.0, y],
+                [x2, y],
+                c.transform,
+                g,
+            );
         }
 
         // block borders
@@ -94,20 +97,24 @@ impl GridView {
             let y2 = settings.size;
 
             // vertical line
-            line_from_to(settings.border_color,
-                         settings.block_border_radius,
-                         [x, 0.0],
-                         [x, y2],
-                         c.transform,
-                         g);
+            line_from_to(
+                settings.border_color,
+                settings.block_border_radius,
+                [x, 0.0],
+                [x, y2],
+                c.transform,
+                g,
+            );
 
             // horizontal line
-            line_from_to(settings.border_color,
-                         settings.block_border_radius,
-                         [0.0, y],
-                         [x2, y],
-                         c.transform,
-                         g);
+            line_from_to(
+                settings.border_color,
+                settings.block_border_radius,
+                [0.0, y],
+                [x2, y],
+                c.transform,
+                g,
+            );
         }
 
         // characters
@@ -122,11 +129,13 @@ impl GridView {
                     j as f64 * cell_size + 39.0
                 ];
 
-                text.draw(ch,
-                          glyphs,
-                          &c.draw_state,
-                          c.transform.trans_pos(pos),
-                          g).unwrap();
+                text.draw(
+                    ch.as_str(),
+                    glyphs,
+                    &c.draw_state,
+                    c.transform.trans_pos(pos),
+                    g,
+                ).unwrap();
             }
         }
     }

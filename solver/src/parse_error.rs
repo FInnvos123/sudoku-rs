@@ -1,7 +1,7 @@
 //! Sudoku parsing errors
 
-use std::fmt;
 use std::error::Error;
+use std::fmt;
 
 /// Error while parsing the sudoku
 #[derive(Debug)]
@@ -19,7 +19,7 @@ pub enum ParseError {
     /// Invalid character encountered
     ///
     /// InvalidCharacter(line nr, character)
-    InvalidCharacter(usize, char)
+    InvalidCharacter(usize, char),
 }
 
 impl fmt::Display for ParseError {
@@ -27,15 +27,19 @@ impl fmt::Display for ParseError {
         use self::ParseError::*;
 
         match *self {
-            InvalidLineLength(line_nr, expected, actual) =>
-                write!(f, "Line {} didn't match expected line length. Expected: {}, Actual: {}",
-                       line_nr, expected, actual),
-            InvalidRowCount(expected, actual) =>
-                write!(f, "Amount of rows didn't match expected amount. Expected: {}, Actual: {}",
-                       expected, actual),
-            InvalidCharacter(line_nr, ch) =>
-                write!(f, "Line {} contains an invalid character '{}'",
-                       line_nr, ch)
+            InvalidLineLength(line_nr, expected, actual) => write!(
+                f,
+                "Line {} didn't match expected line length. Expected: {}, Actual: {}",
+                line_nr, expected, actual
+            ),
+            InvalidRowCount(expected, actual) => write!(
+                f,
+                "Amount of rows didn't match expected amount. Expected: {}, Actual: {}",
+                expected, actual
+            ),
+            InvalidCharacter(line_nr, ch) => {
+                write!(f, "Line {} contains an invalid character '{}'", line_nr, ch)
+            }
         }
     }
 }
