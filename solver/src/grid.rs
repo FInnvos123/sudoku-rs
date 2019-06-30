@@ -82,11 +82,73 @@ impl Grid {
         Ok(grid)
     }
 
-    /// Get number at specified location
-    pub fn get_num(&self, coords: [usize; 2]) -> String {
+    /// Get cell value at specified location
+    pub fn get_value(&self, coords: [usize; 2]) -> Option<u32> {
+        self.cells[coords[0] + coords[1] * SIZE].value
+    }
+
+    /// Get cell value at specified location as str
+    pub fn get_value_str(&self, coords: [usize; 2]) -> String {
         if let Some(n) = self.cells[coords[0] + coords[1] * SIZE].value {
             return n.to_string();
         }
         "".to_string()
+    }
+
+    /// Get first empty cell, starting from top left
+    pub fn get_empty_cell(&self) -> Option<[usize; 2]> {
+        for y in 0..SIZE {
+            for x in 0..SIZE {
+                if self.cells[x + y * SIZE].value == None {
+                    return Some([x, y]);
+                }
+            }
+        }
+        None
+    }
+
+    /// Check if number is valid for the provided cell
+    pub fn check_num(&self, cell: [usize; 2], n: u32) -> bool {
+        for c in self.get_col(cell[0]) {
+            if c.value == Some(n) {
+                return false;
+            }
+        }
+
+        for r in self.get_row(cell[1]) {
+            if r.value == Some(n) {
+                return false;
+            }
+        }
+
+        true
+    }
+
+    /// Get grid column
+    pub fn get_col(&self, col: usize) -> Vec<Cell> {
+        let mut c = Vec::with_capacity(SIZE);
+        for y in 0..SIZE {
+            c.push(self.cells[col + y * SIZE]);
+        }
+        c
+    }
+
+    /// Get grid row
+    pub fn get_row(&self, row: usize) -> Vec<Cell> {
+        let mut c = Vec::with_capacity(SIZE);
+        for x in 0..SIZE {
+            c.push(self.cells[x + row * SIZE]);
+        }
+        c
+    }
+
+    /// Set cell value
+    pub fn set(&mut self, cell: [usize; 2], n: u32) {
+        self.cells[cell[0] + cell[1] * SIZE].value = Some(n);
+    }
+
+    /// Unset cell value
+    pub fn unset(&mut self, cell: [usize; 2]) {
+        self.cells[cell[0] + cell[1] * SIZE].value = None;
     }
 }

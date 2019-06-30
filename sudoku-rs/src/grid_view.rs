@@ -122,7 +122,7 @@ impl GridView {
         let cell_size = settings.size / 9.0;
         for j in 0..9 {
             for i in 0..9 {
-                let ch = grid.get_num([i, j]);
+                let ch = grid.get_value_str([i, j]);
 
                 let pos = [
                     i as f64 * cell_size + 19.0,

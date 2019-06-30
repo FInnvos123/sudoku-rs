@@ -10,7 +10,7 @@ extern crate structopt;
 pub use crate::grid_view::{GridView, GridViewSettings};
 use crate::options::Opt;
 use piston_window::*;
-use solver::Grid;
+use solver::{ StepSolver, Grid };
 use structopt::StructOpt;
 
 mod grid_view;
@@ -29,7 +29,7 @@ fn main() {
     let grid_view = GridView::new(grid_view_settings);
 
     // load sudoku grid
-    let grid = Grid::from_file(&options.file).unwrap_or_else(|err| {
+    let mut grid = Grid::from_file(&options.file).unwrap_or_else(|err| {
         println!("{}", err);
         std::process::exit(1);
     });
@@ -42,6 +42,12 @@ fn main() {
         .load_font(assets.join("FiraSans-Regular.ttf"))
         .unwrap();
 
+    let mut solver = StepSolver::new(&grid);
+
+    let mut solved = false;
+
+    window.set_bench_mode(true);
+
     // render loop
     while let Some(e) = window.next() {
         window.draw_2d(&e, |c, g, d| {
@@ -50,5 +56,11 @@ fn main() {
 
             glyphs.factory.encoder.flush(d);
         });
+
+        if let Some(_args) = e.update_args() {
+            if !solved {
+                solved = solver.solve_step(&mut grid);
+            }
+        }
     }
 }
