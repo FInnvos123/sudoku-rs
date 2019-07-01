@@ -115,8 +115,14 @@ impl Grid {
             }
         }
 
-        for r in self.get_row(cell[1]) {
-            if r.value == Some(n) {
+        for c in self.get_row(cell[1]) {
+            if c.value == Some(n) {
+                return false;
+            }
+        }
+
+        for c in self.get_block(cell[0], cell[1]) {
+            if c.value == Some(n) {
                 return false;
             }
         }
@@ -138,6 +144,20 @@ impl Grid {
         let mut c = Vec::with_capacity(SIZE);
         for x in 0..SIZE {
             c.push(self.cells[x + row * SIZE]);
+        }
+        c
+    }
+
+    /// Get block containing cell at col, row
+    pub fn get_block(&self, col: usize, row: usize) -> Vec<Cell> {
+        let mut c = Vec::with_capacity(SIZE);
+        let startx = col - col % 3;
+        let starty = row - row % 3;
+
+        for y in starty..starty + 3 {
+            for x in startx..startx + 3 {
+                c.push(self.cells[x + y * SIZE]);
+            }
         }
         c
     }
