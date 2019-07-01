@@ -5,9 +5,9 @@ use structopt::StructOpt;
 #[derive(StructOpt, Debug)]
 #[structopt(name="Sudoku-rs")]
 pub struct Opt {
-    /// Delay between steps when solving in milliseconds
-    #[structopt(short = "d", long = "delay", default_value = "200.0")]
-    pub delay: f64,
+    /// Updates per second
+    #[structopt(short = "u", long = "ups", default_value = "120")]
+    pub ups: u64,
 
     /// File containing the sudoku
     #[structopt(name = "FILE", parse(from_os_str))]

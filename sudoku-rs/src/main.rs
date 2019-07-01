@@ -46,7 +46,7 @@ fn main() {
 
     let mut solved = false;
 
-    window.set_bench_mode(true);
+    window.set_ups(options.ups);
 
     // render loop
     while let Some(e) = window.next() {
