@@ -4,7 +4,7 @@
 //!
 //! # Example
 //! ```
-//! use solver::Grid;
+//! use solver::*;
 //!
 //! let sudoku = "\
 //! ___26_7_1
@@ -17,7 +17,9 @@
 //! _4__5__36
 //! 7_3_18___";
 //!
-//! let grid = Grid::from_str(sudoku).unwrap();
+//! let mut grid = Grid::from_str(sudoku).unwrap();
+//!
+//! assert_eq!(solve(&mut grid), true);
 //! ```
 
 pub use crate::grid::Grid;

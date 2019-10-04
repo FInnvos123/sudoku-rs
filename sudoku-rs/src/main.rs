@@ -2,11 +2,6 @@
 
 //! Graphical sudoku solver using solver library
 
-extern crate solver;
-extern crate find_folder;
-extern crate piston_window;
-extern crate structopt;
-
 pub use crate::grid_view::{GridView, GridViewSettings};
 use crate::options::Opt;
 use piston_window::*;
